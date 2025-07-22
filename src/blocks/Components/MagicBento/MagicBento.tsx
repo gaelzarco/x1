@@ -2,6 +2,11 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
+import localFont from 'next/font/local';
+
+const dots = localFont({
+  src: '../../../../public/Dots.ttf',
+})
 
 export interface BentoCardProps {
   color?: string;
@@ -40,22 +45,22 @@ const cardData: BentoCardProps[] = [
   },
   {
     color: "#080401",
-    title: "Interests",
-    description: "Graphics and game development",
-    label: "Projects",
-  },
-  {
-    color: "#080401",
-    title: "Education",
-    description: "Computer science and web",
-    label: "Background",
-  },
-  {
-    color: "#080401",
     title: "Email",
     description: "Get in touch directly",
     label: "Contact",
   },
+  {
+    color: "#080401",
+    title: "Interests",
+    description: "Graphics and games",
+    label: "Projects",
+  },
+  {
+    color: "#080401",
+    title: "Background",
+    description: "Computer science and web development",
+    label: "Education",
+  }
 ];
 
 const createParticleElement = (
@@ -221,7 +226,7 @@ const ParticleCard: React.FC<{
         gsap.to(element, {
           rotateX: 5,
           rotateY: 5,
-          duration: 0.3,
+          duration: 0.1,
           ease: "power2.out",
           transformPerspective: 1000,
         });
@@ -236,7 +241,7 @@ const ParticleCard: React.FC<{
         gsap.to(element, {
           rotateX: 0,
           rotateY: 0,
-          duration: 0.3,
+          duration: 0.1,
           ease: "power2.out",
         });
       }
@@ -245,7 +250,7 @@ const ParticleCard: React.FC<{
         gsap.to(element, {
           x: 0,
           y: 0,
-          duration: 0.3,
+          duration: 0.1,
           ease: "power2.out",
         });
       }
@@ -253,7 +258,6 @@ const ParticleCard: React.FC<{
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!enableTilt && !enableMagnetism) return;
-
       const rect = element.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -263,12 +267,11 @@ const ParticleCard: React.FC<{
       if (enableTilt) {
         const rotateX = ((y - centerY) / centerY) * -10;
         const rotateY = ((x - centerX) / centerX) * 10;
-
-        gsap.to(element, {
+        
+        // Use gsap.set() for instant positioning
+        gsap.set(element, {
           rotateX,
           rotateY,
-          duration: 0.1,
-          ease: "power2.out",
           transformPerspective: 1000,
         });
       }
@@ -276,12 +279,9 @@ const ParticleCard: React.FC<{
       if (enableMagnetism) {
         const magnetX = (x - centerX) * 0.05;
         const magnetY = (y - centerY) * 0.05;
-
-        magnetismAnimationRef.current = gsap.to(element, {
+        gsap.set(element, {
           x: magnetX,
           y: magnetY,
-          duration: 0.3,
-          ease: "power2.out",
         });
       }
     };
@@ -732,7 +732,7 @@ const MagicBento: React.FC<BentoProps> = ({
                   enableMagnetism={enableMagnetism}
                 >
                   <div className="card__header flex justify-between gap-3 relative text-white">
-                    <span className="card__label text-base">{card.label}</span>
+                    <span className={`${dots.className} ${dots.className} antialiased card__label text-base font-bold`}>{card.label}</span>
                   </div>
                   <div className="card__content flex flex-col relative text-white">
                     <h3
@@ -760,23 +760,30 @@ const MagicBento: React.FC<BentoProps> = ({
 
                   const handleMouseMove = (e: MouseEvent) => {
                     if (shouldDisableAnimations) return;
-
                     const rect = el.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
-
+                    
                     if (enableTilt) {
                       const rotateX = ((y - centerY) / centerY) * -10;
                       const rotateY = ((x - centerX) / centerX) * 10;
-
-                      gsap.to(el, {
+                      
+                      // Use gsap.set() for instant response
+                      gsap.set(el, {
                         rotateX,
                         rotateY,
-                        duration: 0.1,
-                        ease: "power2.out",
                         transformPerspective: 1000,
+                      });
+                    }
+
+                    if (enableMagnetism) {
+                      const magnetX = (x - centerX) * 0.05;
+                      const magnetY = (y - centerY) * 0.05;
+                      gsap.set(el, {
+                        x: magnetX,
+                        y: magnetY,
                       });
                     }
 
