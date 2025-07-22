@@ -1,17 +1,22 @@
 import MagicBento from '@/blocks/Components/MagicBento/MagicBento';
+import BlurText from '@/blocks/TextAnimations/BlurText/BlurText';
 import localFont from 'next/font/local'
 
 const dots = localFont({
-  src: '../..//public/dots.ttf',
+  src: '../../public/dots.ttf',
 })
 
 export default function Home() {
   return (
     <main className="flex flex-row gap-0 w-full max-w-full h-screen">
       <div className="flex-1 flex justify-center items-center">
-        <h1 className={`${dots.className} ${dots.className} antialiased text-4xl font-bold`}>
-          Gael Zarco
-        </h1>
+          <BlurText
+            text="Gael Zarco"
+            delay={150}
+            animateBy="words"
+            direction="top"
+            className={`${dots.className} ${dots.className} antialiased text-4xl font-bold`}
+          />
       </div>
       <div className="flex-1 flex justify-center items-center">
         <MagicBento 
