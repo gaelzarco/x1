@@ -1,6 +1,9 @@
 import MagicBento from '@/blocks/Components/MagicBento/MagicBento';
 import BlurText from '@/blocks/TextAnimations/BlurText/BlurText';
+import StarBorder from '@/blocks/Animations/StarBorder/StarBorder';
 import localFont from 'next/font/local';
+
+import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 
 const dots = localFont({
   src: '../../public/Dots.ttf',
@@ -13,7 +16,7 @@ const aux = localFont({
 export default function Home() {
   return (
     <div className="flex flex-row gap-0 w-full max-w-[1750px] h-full">
-      <div className="flex-1 flex flex-col justify-center">
+      <div className="flex-1 flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:px-16 py-12">
           <BlurText
             text="Gael Zarco"
             delay={150}
@@ -24,6 +27,8 @@ export default function Home() {
           <h2 className={`${aux.className} ${aux.className} antialiased text-md`}>
             Software Engineer | Computer Science Student
           </h2>
+          <div>
+          </div>
       </div>
       <div className="flex-1 flex justify-center items-center">
         <MagicBento 
